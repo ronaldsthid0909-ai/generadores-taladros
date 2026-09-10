@@ -207,14 +207,30 @@ def make_load_chart(df, gen_cols, threshold, events, rig):
         
             xaxis_title="Tiempo",
             yaxis_title="Carga (%)",
-        
+
             xaxis=dict(
+                title_font=dict(
+                    color="white",
+                    size=16
+                ),
+                tickfont=dict(
+                    color="white",
+                    size=12
+                ),
                 showgrid=True,
                 gridcolor="rgba(255,255,255,0.08)",
                 color="white"
             ),
-        
+            
             yaxis=dict(
+                title_font=dict(
+                    color="white",
+                    size=16
+                ),
+                tickfont=dict(
+                    color="white",
+                    size=12
+                ),
                 showgrid=True,
                 gridcolor="rgba(255,255,255,0.08)",
                 color="white",
