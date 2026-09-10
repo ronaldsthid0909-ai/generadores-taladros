@@ -168,65 +168,78 @@ def make_load_chart(df, gen_cols, threshold, events, rig):
         )
 
     fig.add_hline(
-        y=threshold,
-        line_dash="dash",
-        line_width=2,
-        annotation_text=f"Umbral {threshold:.0f}%",
-        annotation_position="top left",
-    )
+    y=threshold,
+    line_color="white",
+    line_dash="dot",
+    line_width=4,
+    annotation_text=f"UMBRAL {threshold:.0f}%",
+    annotation_font_color="white",
+    annotation_font_size=14,
+)
 
     for _, ev in events.iterrows():
 
         fig.add_vrect(
             x0=ev["Inicio"],
             x1=ev["Fin"],
-            fillcolor="rgba(255,0,0,0.25)",
+            fillcolor="rgba(0,176,240,0.12)",
             line_width=0,
             layer="below",
         )
 
-    fig.update_layout(
-        title=f"Carga de los 4 generadores — Rig {rig}",
+   fig.update_layout(
 
-        plot_bgcolor="#0F172A",
-        paper_bgcolor="#0F172A",
+    title=dict(
+        text=f"Carga de los 4 generadores — Rig {rig}",
+        font=dict(
+            color="white",
+            size=22
+        )
+    ),
 
+    plot_bgcolor="#102542",
+    paper_bgcolor="#102542",
+
+    font=dict(
+        color="white",
+        size=12
+    ),
+
+    xaxis_title="Tiempo",
+    yaxis_title="Carga (%)",
+
+    xaxis=dict(
+        showgrid=True,
+        gridcolor="rgba(255,255,255,0.08)",
+        color="white"
+    ),
+
+    yaxis=dict(
+        showgrid=True,
+        gridcolor="rgba(255,255,255,0.08)",
+        color="white",
+        range=[0, max(50, threshold + 10)]
+    ),
+
+    legend=dict(
+        bgcolor="rgba(0,0,0,0)",
         font=dict(
             color="white",
             size=12
-        ),
+        )
+    ),
 
-        xaxis_title="Tiempo",
-        yaxis_title="Carga (%)",
+    hovermode="x unified",
 
-        xaxis=dict(
-            showgrid=True,
-            gridcolor="rgba(255,255,255,0.10)",
-            color="white"
-        ),
+    margin=dict(
+        l=40,
+        r=20,
+        t=70,
+        b=40
+    ),
 
-        yaxis=dict(
-            showgrid=True,
-            gridcolor="rgba(255,255,255,0.10)",
-            color="white",
-            range=[0, max(50, threshold + 10)]
-        ),
-
-        legend=dict(
-            font=dict(color="white")
-        ),
-
-        hovermode="x unified",
-
-        margin=dict(
-            l=40,
-            r=20,
-            t=70,
-            b=40
-        ),
-
-        height=550,
-    )
+    height=600
+)
 
     return fig
 
