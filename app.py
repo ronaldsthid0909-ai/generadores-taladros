@@ -218,7 +218,7 @@ def make_load_chart(df, gen_cols, threshold, events, rig):
             ),
             tickfont=dict(
                 color="white",
-                size=18  # Porcentajes eje Y
+                size=26  # Porcentajes eje Y
             ),
             showgrid=True,
             gridcolor="rgba(255,255,255,0.12)",
