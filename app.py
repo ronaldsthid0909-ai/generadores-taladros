@@ -130,6 +130,7 @@ def detect_events(
 
     events_df = pd.DataFrame(events).sort_values("Inicio").reset_index(drop=True)
     return work, events_df[events_df["Cumple >5h"]].copy()
+    
 def make_load_chart(df, gen_cols, threshold, events, rig):
     colors = {
         "GEN 1": "#00B0F0",  # Azul brillante
@@ -201,11 +202,11 @@ def make_load_chart(df, gen_cols, threshold, events, rig):
         xaxis=dict(
             title=dict(
                 text="Tiempo",
-                font=dict(color="white", size=22)  # Título eje X
+                font=dict(color="white", size=28)  # Título eje X
             ),
             tickfont=dict(
                 color="white",
-                size=18  # Valores/fechas eje X
+                size=26  # Valores/fechas eje X
             ),
             showgrid=True,
             gridcolor="rgba(255,255,255,0.12)",
