@@ -182,7 +182,7 @@ def make_load_chart(df, gen_cols, threshold, events, rig):
         fig.add_vrect(
             x0=ev["Inicio"],
             x1=ev["Fin"],
-            fillcolor="rgba(0,176,240,0.05)",
+            fillcolor="rgba(220, 0, 0, 0.10)",
             line_width=0,
             layer="below",
         )
