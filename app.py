@@ -238,7 +238,6 @@ def make_load_chart(df, gen_cols, threshold, events, rig):
             ),
         
             legend=dict(
-                bgcolor="rgba(0,0,0,0)",
                 font=dict(
                     color="#FFFFFF",
                     size=26
