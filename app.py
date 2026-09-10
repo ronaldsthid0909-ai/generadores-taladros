@@ -6,6 +6,12 @@ import pandas as pd
 import plotly.graph_objects as go
 import streamlit as st
 
+colors = {"GEN 1": "#1F4E79", # Azul oscuro
+"GEN 2": "#FF7F0E", # Naranja
+"GEN 3": "#2CA02C", # Verde
+"GEN 4": "#D62728" # Rojo
+}
+
 st.set_page_config(
     page_title="Optimización de Generadores",
     page_icon="⚡",
@@ -139,7 +145,7 @@ def make_load_chart(df: pd.DataFrame, gen_cols: List[str], threshold: float, eve
         label = f"GEN {m.group(1)}" if m else col
         labels[col] = label
         fig.add_trace(go.Scatter(
-            x=df["Time"], y=df[col], mode="lines", name=label,
+            x=df["Time"],y=df[col],mode="lines",name=label,line=dict(color=colors[label],width=3)
             hovertemplate=f"%{{x|%d/%m %H:%M}}<br>{label}: %{{y:.1f}}%<extra></extra>",
         ))
 
