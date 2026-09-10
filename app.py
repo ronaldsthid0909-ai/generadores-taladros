@@ -205,9 +205,6 @@ def make_load_chart(df, gen_cols, threshold, events, rig):
                 size=12
             ),
 
-          xaxis_title="Tiempo",
-          yaxis_title="Carga (%)",
-
           xaxis=dict(
                 title="Tiempo",
                 tickfont=dict(
