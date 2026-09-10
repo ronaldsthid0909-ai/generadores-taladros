@@ -130,7 +130,6 @@ def detect_events(
 
     events_df = pd.DataFrame(events).sort_values("Inicio").reset_index(drop=True)
     return work, events_df[events_df["Cumple >5h"]].copy()
-
 def make_load_chart(df, gen_cols, threshold, events, rig):
     colors = {
         "GEN 1": "#00B0F0",  # Azul brillante
@@ -140,12 +139,10 @@ def make_load_chart(df, gen_cols, threshold, events, rig):
     }
 
     fig = go.Figure()
-    labels = {}
 
     for col in gen_cols:
         m = GEN_LOAD_RE.search(col)
         label = f"GEN {m.group(1)}" if m else col
-        labels[col] = label
 
         fig.add_trace(
             go.Scatter(
@@ -161,7 +158,7 @@ def make_load_chart(df, gen_cols, threshold, events, rig):
             )
         )
 
-    # Línea horizontal del umbral
+    # Línea horizontal del umbral con texto grande
     fig.add_hline(
         y=threshold,
         line_color="white",
@@ -169,7 +166,7 @@ def make_load_chart(df, gen_cols, threshold, events, rig):
         line_width=4,
         annotation_text=f"UMBRAL {threshold:.0f}%",
         annotation_font_color="white",
-        annotation_font_size=14,
+        annotation_font_size=18,
     )
 
     # Sombreado de eventos detectados
@@ -177,65 +174,68 @@ def make_load_chart(df, gen_cols, threshold, events, rig):
         fig.add_vrect(
             x0=ev["Inicio"],
             x1=ev["Fin"],
-            fillcolor="rgba(102,204,255,0.10)",
+            fillcolor="rgba(102,204,255,0.15)",
             line_width=0,
             layer="below",
         )
 
-    # Configuración de diseño y fuentes agrandadas
+    # Configuración optimizada para presentaciones (Fuentes grandes)
     fig.update_layout(
         title=dict(
             text=f"Carga de los 4 generadores — Rig {rig}",
             font=dict(
                 color="#FFFFFF",
-                size=26
+                size=32  # Título principal grande
             )
         ),
         plot_bgcolor="#102542",
         paper_bgcolor="#102542",
         font=dict(
             color="white",
-            size=14  # Tamaño general de texto elevado
+            size=18  # Tamaño base general
+        ),
+        legend=dict(
+            font=dict(size=18, color="white"),  # Leyenda legible para PPT
+            bgcolor="rgba(0,0,0,0.2)"
         ),
         xaxis=dict(
             title=dict(
                 text="Tiempo",
-                font=dict(color="white", size=16)  # Título eje X en blanco y más grande
+                font=dict(color="white", size=22)  # Título eje X
             ),
             tickfont=dict(
                 color="white",
-                size=14  # Marcas de tiempo del eje X más grandes
+                size=18  # Valores/fechas eje X
             ),
             showgrid=True,
-            gridcolor="rgba(255,255,255,0.08)",
+            gridcolor="rgba(255,255,255,0.12)",
             color="white"
         ),
         yaxis=dict(
             title=dict(
                 text="Carga (%)",
-                font=dict(color="white", size=16)  # Título eje Y en blanco y más grande
+                font=dict(color="white", size=22)  # Título eje Y
             ),
             tickfont=dict(
                 color="white",
-                size=14  # Valores numéricos del eje Y más grandes
+                size=18  # Porcentajes eje Y
             ),
             showgrid=True,
-            gridcolor="rgba(255,255,255,0.08)",
+            gridcolor="rgba(255,255,255,0.12)",
             color="white",
             range=[0, max(50, threshold + 10)]
         ),
         hovermode="x unified",
         margin=dict(
-            l=50,
-            r=20,
-            t=70,
-            b=50
+            l=70,  # Más espacio lateral para los números grandes
+            r=30,
+            t=90,
+            b=70
         ),
-        height=600
+        height=750  # Mayor altura para ocupar más espacio en PPT
     )
 
     return fig
-
 
 def make_fleet_chart(summary: pd.DataFrame):
     s = summary.sort_values("Eventos >5h", ascending=True)
