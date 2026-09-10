@@ -205,8 +205,8 @@ def make_load_chart(df, gen_cols, threshold, events, rig):
                 size=12
             ),
 
-            xaxis_title="",
-            yaxis_title="",
+          xaxis_title="Tiempo",
+          yaxis_title="Carga (%)",
 
             fig.add_annotation(
                 text="Tiempo",
