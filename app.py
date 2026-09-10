@@ -132,24 +132,40 @@ def detect_events(
     return work, events_df[events_df["Cumple >5h"]].copy()
 
 
-def make_load_chart(df: pd.DataFrame, gen_cols: List[str], threshold: float, events: pd.DataFrame, rig: str):
+def make_load_chart(df, gen_cols, threshold, events, rig):
 
-    colors = {"GEN 1": "#1F4E79",
-    "GEN 2": "#FF7F0E",
-    "GEN 3": "#2CA02C",
-    "GEN 4": "#D62728" 
+    colors = {
+        "GEN 1": "#00B0F0",  # Azul brillante
+        "GEN 2": "#FFC000",  # Amarillo
+        "GEN 3": "#00B050",  # Verde
+        "GEN 4": "#FF4D4D"   # Rojo
     }
-    
+
     fig = go.Figure()
+
     labels = {}
+
     for col in gen_cols:
+
         m = GEN_LOAD_RE.search(col)
+
         label = f"GEN {m.group(1)}" if m else col
+
         labels[col] = label
-        fig.add_trace(go.Scatter(
-            x=df["Time"],y=df[col],mode="lines",name=label,line=dict(color=colors[label],width=3),
-            hovertemplate=f"%{{x|%d/%m %H:%M}}<br>{label}: %{{y:.1f}}%<extra></extra>",
-        ))
+
+        fig.add_trace(
+            go.Scatter(
+                x=df["Time"],
+                y=df[col],
+                mode="lines",
+                name=label,
+                line=dict(
+                    color=colors[label],
+                    width=3
+                ),
+                hovertemplate=f"%{{x|%d/%m %H:%M}}<br>{label}: %{{y:.1f}}%<extra></extra>",
+            )
+        )
 
     fig.add_hline(
         y=threshold,
@@ -159,24 +175,59 @@ def make_load_chart(df: pd.DataFrame, gen_cols: List[str], threshold: float, eve
         annotation_position="top left",
     )
 
-    # Shade events > min duration already passed to this function.
     for _, ev in events.iterrows():
+
         fig.add_vrect(
-            x0=ev["Inicio"], x1=ev["Fin"],
-            fillcolor="rgba(220, 0, 0, 0.10)", line_width=0,
+            x0=ev["Inicio"],
+            x1=ev["Fin"],
+            fillcolor="rgba(255,0,0,0.25)",
+            line_width=0,
             layer="below",
         )
 
     fig.update_layout(
         title=f"Carga de los 4 generadores — Rig {rig}",
+
+        plot_bgcolor="#0F172A",
+        paper_bgcolor="#0F172A",
+
+        font=dict(
+            color="white",
+            size=12
+        ),
+
         xaxis_title="Tiempo",
         yaxis_title="Carga (%)",
-        yaxis=dict(range=[0, max(50, threshold + 10)]),
-        legend_title="Generador",
+
+        xaxis=dict(
+            showgrid=True,
+            gridcolor="rgba(255,255,255,0.10)",
+            color="white"
+        ),
+
+        yaxis=dict(
+            showgrid=True,
+            gridcolor="rgba(255,255,255,0.10)",
+            color="white",
+            range=[0, max(50, threshold + 10)]
+        ),
+
+        legend=dict(
+            font=dict(color="white")
+        ),
+
         hovermode="x unified",
-        margin=dict(l=40, r=20, t=70, b=40),
-        height=500,
+
+        margin=dict(
+            l=40,
+            r=20,
+            t=70,
+            b=40
+        ),
+
+        height=550,
     )
+
     return fig
 
 
