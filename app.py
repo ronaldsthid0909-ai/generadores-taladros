@@ -188,15 +188,15 @@ def make_load_chart(df, gen_cols, threshold, events, rig):
         )
 
         fig.update_layout(
-    
+
             title=dict(
                 text=f"Carga de los 4 generadores — Rig {rig}",
                 font=dict(
-                    color="white",
-                    size=22
+                    color="#FFFFFF",
+                    size=26
                 )
             ),
-    
+            
             plot_bgcolor="#102542",
             paper_bgcolor="#102542",
         
