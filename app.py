@@ -216,7 +216,7 @@ def make_load_chart(df, gen_cols, threshold, events, rig):
                 yref="paper",
                 showarrow=False,
                 font=dict(color="white", size=14)
-            )
+            ),
             
             fig.add_annotation(
                 text="Carga (%)",
@@ -227,7 +227,7 @@ def make_load_chart(df, gen_cols, threshold, events, rig):
                 yref="paper",
                 showarrow=False,
                 font=dict(color="white", size=14)
-            )
+            ),
 
             xaxis=dict(
                 tickfont=dict(
@@ -238,26 +238,7 @@ def make_load_chart(df, gen_cols, threshold, events, rig):
                 gridcolor="rgba(255,255,255,0.08)",
                 color="white"
             ),
-            
-            yaxis=dict(
-                tickfont=dict(
-                    color="white",
-                    size=12
-                ),
-                showgrid=True,
-                gridcolor="rgba(255,255,255,0.08)",
-                color="white",
-                range=[0, max(50, threshold + 10)]
-            ),
-
-            legend=dict(
-                bgcolor="rgba(0,0,0,0)",
-                font=dict(
-                    color="#FFFFFF",
-                    size=13
-                )
-            ),
-          
+                      
             hovermode="x unified",
         
             margin=dict(
