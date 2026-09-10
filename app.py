@@ -236,14 +236,15 @@ def make_load_chart(df, gen_cols, threshold, events, rig):
                 color="white",
                 range=[0, max(50, threshold + 10)]
             ),
-        
+
             legend=dict(
+                bgcolor="rgba(0,0,0,0)",
                 font=dict(
                     color="#FFFFFF",
-                    size=26
+                    size=13
                 )
             ),
-        
+          
             hovermode="x unified",
         
             margin=dict(
