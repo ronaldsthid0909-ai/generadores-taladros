@@ -131,9 +131,7 @@ def detect_events(
     events_df = pd.DataFrame(events).sort_values("Inicio").reset_index(drop=True)
     return work, events_df[events_df["Cumple >5h"]].copy()
 
-
 def make_load_chart(df, gen_cols, threshold, events, rig):
-
     colors = {
         "GEN 1": "#00B0F0",  # Azul brillante
         "GEN 2": "#FFC000",  # Amarillo
@@ -142,15 +140,11 @@ def make_load_chart(df, gen_cols, threshold, events, rig):
     }
 
     fig = go.Figure()
-
     labels = {}
 
     for col in gen_cols:
-
         m = GEN_LOAD_RE.search(col)
-
         label = f"GEN {m.group(1)}" if m else col
-
         labels[col] = label
 
         fig.add_trace(
@@ -160,25 +154,26 @@ def make_load_chart(df, gen_cols, threshold, events, rig):
                 mode="lines",
                 name=label,
                 line=dict(
-                    color=colors[label],
+                    color=colors.get(label, "#FFFFFF"),
                     width=3
                 ),
                 hovertemplate=f"%{{x|%d/%m %H:%M}}<br>{label}: %{{y:.1f}}%<extra></extra>",
             )
         )
 
+    # Línea horizontal del umbral
     fig.add_hline(
-    y=threshold,
-    line_color="white",
-    line_dash="dot",
-    line_width=4,
-    annotation_text=f"UMBRAL {threshold:.0f}%",
-    annotation_font_color="white",
-    annotation_font_size=14,
-)
+        y=threshold,
+        line_color="white",
+        line_dash="dot",
+        line_width=4,
+        annotation_text=f"UMBRAL {threshold:.0f}%",
+        annotation_font_color="white",
+        annotation_font_size=14,
+    )
 
+    # Sombreado de eventos detectados
     for _, ev in events.iterrows():
-
         fig.add_vrect(
             x0=ev["Inicio"],
             x1=ev["Fin"],
@@ -187,59 +182,58 @@ def make_load_chart(df, gen_cols, threshold, events, rig):
             layer="below",
         )
 
-        fig.update_layout(
-
-            title=dict(
-                text=f"Carga de los 4 generadores — Rig {rig}",
-                font=dict(
-                    color="#FFFFFF",
-                    size=26
-                )
-            ),
-            
-            plot_bgcolor="#102542",
-            paper_bgcolor="#102542",
-        
+    # Configuración de diseño y fuentes agrandadas
+    fig.update_layout(
+        title=dict(
+            text=f"Carga de los 4 generadores — Rig {rig}",
             font=dict(
+                color="#FFFFFF",
+                size=26
+            )
+        ),
+        plot_bgcolor="#102542",
+        paper_bgcolor="#102542",
+        font=dict(
+            color="white",
+            size=14  # Tamaño general de texto elevado
+        ),
+        xaxis=dict(
+            title=dict(
+                text="Tiempo",
+                font=dict(color="white", size=16)  # Título eje X en blanco y más grande
+            ),
+            tickfont=dict(
                 color="white",
-                size=12
+                size=14  # Marcas de tiempo del eje X más grandes
             ),
-
-          xaxis=dict(
-                title="Tiempo",
-                tickfont=dict(
-                    color="white",
-                    size=12
-                ),
-                showgrid=True,
-                gridcolor="rgba(255,255,255,0.08)",
-                color="white"
+            showgrid=True,
+            gridcolor="rgba(255,255,255,0.08)",
+            color="white"
+        ),
+        yaxis=dict(
+            title=dict(
+                text="Carga (%)",
+                font=dict(color="white", size=16)  # Título eje Y en blanco y más grande
             ),
-
-            yaxis=dict(
-                title="Carga (%)",
-                tickfont=dict(
-                    color="white",
-                    size=12
-                ),
-                showgrid=True,
-                gridcolor="rgba(255,255,255,0.08)",
+            tickfont=dict(
                 color="white",
-                range=[0, max(50, threshold + 10)]
+                size=14  # Valores numéricos del eje Y más grandes
             ),
-                      
-            hovermode="x unified",
-        
-            margin=dict(
-                l=40,
-                r=20,
-                t=70,
-                b=40
-            ),
-        
-            height=600
-        )
-    
+            showgrid=True,
+            gridcolor="rgba(255,255,255,0.08)",
+            color="white",
+            range=[0, max(50, threshold + 10)]
+        ),
+        hovermode="x unified",
+        margin=dict(
+            l=50,
+            r=20,
+            t=70,
+            b=50
+        ),
+        height=600
+    )
+
     return fig
 
 
