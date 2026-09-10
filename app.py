@@ -187,7 +187,7 @@ def make_load_chart(df, gen_cols, threshold, events, rig):
             layer="below",
         )
 
-           fig.update_layout(
+        fig.update_layout(
     
             title=dict(
                 text=f"Carga de los 4 generadores — Rig {rig}",
