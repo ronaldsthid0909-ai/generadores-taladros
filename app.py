@@ -187,61 +187,61 @@ def make_load_chart(df, gen_cols, threshold, events, rig):
             layer="below",
         )
 
-       fig.update_layout(
-
-        title=dict(
-            text=f"Carga de los 4 generadores — Rig {rig}",
-            font=dict(
-                color="white",
-                size=22
-            )
-        ),
-
-        plot_bgcolor="#102542",
-        paper_bgcolor="#102542",
+           fig.update_layout(
     
-        font=dict(
-            color="white",
-            size=12
-        ),
+            title=dict(
+                text=f"Carga de los 4 generadores — Rig {rig}",
+                font=dict(
+                    color="white",
+                    size=22
+                )
+            ),
     
-        xaxis_title="Tiempo",
-        yaxis_title="Carga (%)",
-    
-        xaxis=dict(
-            showgrid=True,
-            gridcolor="rgba(255,255,255,0.08)",
-            color="white"
-        ),
-    
-        yaxis=dict(
-            showgrid=True,
-            gridcolor="rgba(255,255,255,0.08)",
-            color="white",
-            range=[0, max(50, threshold + 10)]
-        ),
-    
-        legend=dict(
-            bgcolor="rgba(0,0,0,0)",
+            plot_bgcolor="#102542",
+            paper_bgcolor="#102542",
+        
             font=dict(
                 color="white",
                 size=12
-            )
-        ),
+            ),
+        
+            xaxis_title="Tiempo",
+            yaxis_title="Carga (%)",
+        
+            xaxis=dict(
+                showgrid=True,
+                gridcolor="rgba(255,255,255,0.08)",
+                color="white"
+            ),
+        
+            yaxis=dict(
+                showgrid=True,
+                gridcolor="rgba(255,255,255,0.08)",
+                color="white",
+                range=[0, max(50, threshold + 10)]
+            ),
+        
+            legend=dict(
+                bgcolor="rgba(0,0,0,0)",
+                font=dict(
+                    color="white",
+                    size=12
+                )
+            ),
+        
+            hovermode="x unified",
+        
+            margin=dict(
+                l=40,
+                r=20,
+                t=70,
+                b=40
+            ),
+        
+            height=600
+        )
     
-        hovermode="x unified",
-    
-        margin=dict(
-            l=40,
-            r=20,
-            t=70,
-            b=40
-        ),
-    
-        height=600
-    )
-    
-        return fig
+    return fig
 
 
 def make_fleet_chart(summary: pd.DataFrame):
