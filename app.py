@@ -208,25 +208,27 @@ def make_load_chart(df, gen_cols, threshold, events, rig):
           xaxis_title="Tiempo",
           yaxis_title="Carga (%)",
 
-            fig.add_annotation(
-                text="Tiempo",
-                x=0.5,
-                y=-0.15,
-                xref="paper",
-                yref="paper",
-                showarrow=False,
-                font=dict(color="white", size=14)
+          xaxis=dict(
+                title="Tiempo",
+                tickfont=dict(
+                    color="white",
+                    size=12
+                ),
+                showgrid=True,
+                gridcolor="rgba(255,255,255,0.08)",
+                color="white"
             ),
-            
-            fig.add_annotation(
-                text="Carga (%)",
-                x=-0.06,
-                y=0.5,
-                textangle=-90,
-                xref="paper",
-                yref="paper",
-                showarrow=False,
-                font=dict(color="white", size=14)
+
+            yaxis=dict(
+                title="Carga (%)",
+                tickfont=dict(
+                    color="white",
+                    size=12
+                ),
+                showgrid=True,
+                gridcolor="rgba(255,255,255,0.08)",
+                color="white",
+                range=[0, max(50, threshold + 10)]
             ),
 
             xaxis=dict(
